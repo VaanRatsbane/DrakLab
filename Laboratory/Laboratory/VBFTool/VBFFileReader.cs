@@ -16,6 +16,7 @@ namespace Laboratory.VBFTool
         public ulong NumFiles => mNumFiles;
 
         public string mBigFilePath;
+        public string mBigFileFolder;
         private ushort[] mBlockList;
         private uint[] mBlockListStarts;
         private string[] mFileNameMd5s;
@@ -29,6 +30,8 @@ namespace Laboratory.VBFTool
         public void LoadBigFileFile(string path)
         {
             mBigFilePath = path;
+            var frags = mBigFilePath.Split('\\');
+            mBigFileFolder = String.Join("\\", frags, 0, frags.Length - 1);
             var fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
             try
             {

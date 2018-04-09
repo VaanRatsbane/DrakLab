@@ -15,17 +15,15 @@ namespace Laboratory
     {
 
         public string systemName;
-        public VFolder root, currentFolder;
+        public VFolder root;
         public ulong folderCount, fileCount;
-        public bool isRaw;
 
         public VFileSystem(string systemName, VirtuosBigFileReader reader)
         {
-            this.systemName = systemName;
+            this.systemName = systemName.Split('\\').Last();
             fileCount = reader.mNumFiles;
             folderCount = 0;
             root = new VFolder("");
-            currentFolder = root;
 
             var fileList = reader.ReadFileList();
             for(int i = 0; i < fileList.Count(); i++)
@@ -33,16 +31,11 @@ namespace Laboratory
                 folderCount += root.AddFile(fileList[i], i, reader.mOriginalSizes[i]);
             }
 
-            isRaw = !root.HasFile("vbf_extra.bin");
-
             Console.WriteLine($"Added {folderCount} folders and {fileCount} files.");
         }
 
-        internal bool VerifyInjection(string[] filePaths, out string[] report)
+        internal bool VerifyInjection(string prefix, List<string> filePaths, out string[] report)
         {
-            //first get prefix path (all path until filename, including \)
-            var prefix = filePaths[0].Substring(0, filePaths[0].LastIndexOf('\\') + 1);
-            var currentPath = currentFolder.GetPath();
 
             //parse dir names into multiple child filenames
             var files = parseFilePaths(filePaths);
@@ -55,11 +48,15 @@ namespace Laboratory
                 return false;
             }
 
-
-            //then remove prefix path from all file paths, and prefix them with currentFolder instead
+            //then remove prefix path from all file paths
             for (int i = 0; i < files.Count; i++)
             {
-                var virtualPath = currentPath.TrimStart('/') + "\\" + files[i].Replace(prefix, "");
+                var virtualPath = files[i].Replace(prefix, "");
+
+                //ignore metadata
+                if (virtualPath.ToLower().EndsWith("readme.txt") || virtualPath.ToLower().EndsWith("mod.ini"))
+                    continue;
+
                 //verify their existence
                 if (!root.HasFile(virtualPath))
                 {
@@ -70,10 +67,9 @@ namespace Laboratory
             }
             report = reports.ToArray();
             return reports.Count == 0;
-
         }
 
-        private List<string> parseFilePaths(string[] filePaths)
+        private List<string> parseFilePaths(List<string> filePaths)
         {
             var files = new List<string>();
             foreach (var p in filePaths)
@@ -82,7 +78,7 @@ namespace Laboratory
                     files.Add(p);
                 else
                 {
-                    files.AddRange(parseFilePaths(Directory.EnumerateFiles(p,"*.*",SearchOption.AllDirectories).ToArray()).ToArray());
+                    files.AddRange(parseFilePaths(Directory.EnumerateFiles(p,"*.*",SearchOption.AllDirectories).ToList()));
                 }
             }
             return files;
@@ -120,8 +116,7 @@ namespace Laboratory
 
         public ulong AddFile(string path, int fileIndex, ulong originalSize)
         {
-            if (path[0] == '/')
-                path = path.TrimStart('/');
+            path = path.TrimStart('/');
             var splices = path.Split('/');
             if(splices.Length == 1) //it's the file!
             {
