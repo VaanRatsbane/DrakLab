@@ -15,7 +15,8 @@ namespace Laboratory
         public LogForm(IEnumerable<string> log)
         {
             InitializeComponent();
-            textBox1.Lines = log.ToArray();
+            if(log != null && log.Count() > 0)
+                textBox1.Lines = log.ToArray();
         }
     }
 }

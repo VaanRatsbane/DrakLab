@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lab));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.modList = new System.Windows.Forms.ListView();
             this.rankColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.nameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.isEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.modVersionLabel = new System.Windows.Forms.Label();
             this.modAuthorText = new System.Windows.Forms.Label();
@@ -46,9 +48,8 @@
             this.applyChangesButton = new System.Windows.Forms.Button();
             this.openVBFDialog = new System.Windows.Forms.OpenFileDialog();
             this.addModDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.isEnabled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
+            this.aboutBtn = new System.Windows.Forms.PictureBox();
             this.settingsButton = new System.Windows.Forms.PictureBox();
             this.addModButton = new System.Windows.Forms.PictureBox();
             this.exitPicButton = new System.Windows.Forms.PictureBox();
@@ -74,6 +75,7 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.aboutBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addModButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitPicButton)).BeginInit();
@@ -94,7 +96,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.splitContainer1.Panel1.Controls.Add(this.aboutBtn);
             this.splitContainer1.Panel1.Controls.Add(this.settingsButton);
             this.splitContainer1.Panel1.Controls.Add(this.addModButton);
             this.splitContainer1.Panel1.Controls.Add(this.exitPicButton);
@@ -173,6 +175,11 @@
             // 
             this.nameHeader.Text = "Mod Name";
             this.nameHeader.Width = 201;
+            // 
+            // isEnabled
+            // 
+            this.isEnabled.Text = "✓";
+            this.isEnabled.Width = 24;
             // 
             // splitContainer4
             // 
@@ -278,26 +285,21 @@
             this.applyChangesButton.UseVisualStyleBackColor = true;
             this.applyChangesButton.Click += new System.EventHandler(this.applyChangesButton_Click);
             // 
-            // isEnabled
+            // aboutBtn
             // 
-            this.isEnabled.Text = "✓";
-            this.isEnabled.Width = 24;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(622, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(326, 25);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "MADE BY VAAN - TEST VERSION";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.aboutBtn.Image = global::Laboratory.Properties.Resources.aboutme;
+            this.aboutBtn.Location = new System.Drawing.Point(330, 3);
+            this.aboutBtn.Name = "aboutBtn";
+            this.aboutBtn.Size = new System.Drawing.Size(100, 41);
+            this.aboutBtn.TabIndex = 5;
+            this.aboutBtn.TabStop = false;
+            this.toolTip1.SetToolTip(this.aboutBtn, "Information.");
+            this.aboutBtn.Click += new System.EventHandler(this.aboutBtn_Click);
             // 
             // settingsButton
             // 
             this.settingsButton.Enabled = false;
-            this.settingsButton.Image = global::Laboratory.Properties.Resources.Options;
+            this.settingsButton.Image = global::Laboratory.Properties.Resources.options;
             this.settingsButton.Location = new System.Drawing.Point(224, 3);
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(100, 41);
@@ -309,7 +311,7 @@
             // addModButton
             // 
             this.addModButton.Enabled = false;
-            this.addModButton.Image = global::Laboratory.Properties.Resources.ADD_menu;
+            this.addModButton.Image = global::Laboratory.Properties.Resources.addmod;
             this.addModButton.Location = new System.Drawing.Point(118, 3);
             this.addModButton.Name = "addModButton";
             this.addModButton.Size = new System.Drawing.Size(100, 41);
@@ -320,8 +322,8 @@
             // 
             // exitPicButton
             // 
-            this.exitPicButton.Image = global::Laboratory.Properties.Resources.Exit;
-            this.exitPicButton.Location = new System.Drawing.Point(330, 3);
+            this.exitPicButton.Image = global::Laboratory.Properties.Resources.bye;
+            this.exitPicButton.Location = new System.Drawing.Point(436, 3);
             this.exitPicButton.Name = "exitPicButton";
             this.exitPicButton.Size = new System.Drawing.Size(100, 41);
             this.exitPicButton.TabIndex = 1;
@@ -331,7 +333,7 @@
             // 
             // loadVBFPicButton
             // 
-            this.loadVBFPicButton.Image = global::Laboratory.Properties.Resources.NEW;
+            this.loadVBFPicButton.Image = global::Laboratory.Properties.Resources.openvbf;
             this.loadVBFPicButton.Location = new System.Drawing.Point(12, 3);
             this.loadVBFPicButton.Name = "loadVBFPicButton";
             this.loadVBFPicButton.Size = new System.Drawing.Size(100, 41);
@@ -409,11 +411,11 @@
             this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Lab";
             this.Text = "Draklor Laboratory";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Lab_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -432,6 +434,7 @@
             this.splitContainer4.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.aboutBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.addModButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitPicButton)).EndInit();
@@ -475,7 +478,7 @@
         private System.Windows.Forms.Label modVersionLabel;
         private System.Windows.Forms.ColumnHeader isEnabled;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox aboutBtn;
     }
 }
 

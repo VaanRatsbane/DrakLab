@@ -227,7 +227,6 @@ namespace Laboratory
                 {
                     toggleModButton.Image = Properties.Resources.disable;
                     mod.state = ModState.INACTIVE;
-                    Program.manager.vanilla.ModDisabled(mod);
                     modList.SelectedItems[0].BackColor = Color.White;
                     modList.SelectedItems[0].SubItems[2].Text = "";
                     applyChangesButton.Enabled = Program.manager.hasChanges = true;
@@ -236,7 +235,6 @@ namespace Laboratory
                 {
                     toggleModButton.Image = Properties.Resources.add;
                     mod.state = ModState.ACTIVE;
-                    Program.manager.vanilla.ModEnabled(mod);
                     modList.SelectedItems[0].BackColor = Color.LightGreen;
                     modList.SelectedItems[0].SubItems[2].Text = "✓";
                     applyChangesButton.Enabled = Program.manager.hasChanges = true;
@@ -329,6 +327,13 @@ namespace Laboratory
         private void label1_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.steamcommunity.com/id/Vaan");
+        }
+
+        private void aboutBtn_Click(object sender, EventArgs e)
+        {
+            var form = new AboutForm();
+            form.Owner = this;
+            form.ShowDialog();
         }
     }
 }

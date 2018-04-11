@@ -7,7 +7,7 @@
     <ProjectGuid>{26E60678-5F0B-49BB-B105-B446AD76079A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Laboratory</RootNamespace>
-    <AssemblyName>Laboratory</AssemblyName>
+    <AssemblyName>DrakLab</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>dawn.png.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -48,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +80,11 @@
     <Compile Include="ModManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Scaffold.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsForm.cs">
@@ -82,6 +96,9 @@
     <Compile Include="VanillaTracker.cs" />
     <Compile Include="VBFTool\VBFFileReader.cs" />
     <Compile Include="VFileSystem.cs" />
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileListForm.resx">
       <DependentUpon>FileListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,14 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +131,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dawn.png.ico" />
     <Content Include="ff12-vbf\ff12-vbf.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -134,8 +147,12 @@
     <Content Include="ff12-vbf\zlib1.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\aboutme.png" />
+    <None Include="Resources\bye.png" />
+    <None Include="Resources\options.png" />
+    <None Include="Resources\addmod.png" />
+    <None Include="Resources\openvbf.png" />
     <None Include="Resources\Exit.png" />
-    <None Include="Resources\Options.png" />
     <None Include="Resources\ADD_menu.png" />
     <None Include="Resources\NEW.png" />
     <None Include="Resources\disable.png" />

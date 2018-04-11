@@ -7,6 +7,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Laboratory
 {
@@ -75,8 +76,7 @@ namespace Laboratory
             {
                 MessageBox.Show($"Couldn't save mod settings!\n{e.ToString()}");
             }
-
-            vanilla.Save();
+            
             hasChanges = false;
         }
 
@@ -168,7 +168,7 @@ namespace Laboratory
 
                     Program.InjectionLog(logList);
 
-                    Directory.Delete(tempDirectory, true);
+                    DeleteFilesAndFoldersRecursively(tempDirectory);
 
                     lab.Log($"Injected {scaffold.Count()} files and reverted {reverted} original files.");
                 }
@@ -285,7 +285,6 @@ namespace Laboratory
             var mod = mods[pos];
             hasChanges = mod.state == ModState.ACTIVE;
             DisableModState(pos);
-            vanilla.ModDisabled(mod);
             Directory.Delete(mod.modFolder, true);
             mods.RemoveAt(pos);
         }
@@ -386,6 +385,22 @@ namespace Laboratory
         public ModFile[] GetScaffold()
         {
             return Scaffold.GetScaffold(mods);
+        }
+
+        public static void DeleteFilesAndFoldersRecursively(string target_dir)
+        {
+            foreach (string file in Directory.GetFiles(target_dir))
+            {
+                File.Delete(file);
+            }
+
+            foreach (string subDir in Directory.GetDirectories(target_dir))
+            {
+                DeleteFilesAndFoldersRecursively(subDir);
+            }
+
+            Thread.Sleep(1); // This makes the difference between whether it works or not. Sleep(0) is not enough.
+            Directory.Delete(target_dir);
         }
 
     }

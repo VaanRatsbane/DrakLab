@@ -12,8 +12,6 @@ namespace Laboratory
     class VanillaTracker
     {
         string VANILLAFILESFOLDER = $"\\{Program.fileSystem.systemName}_mods\\_vanilla\\";
-        string VANILLATRACKER = $"\\{Program.fileSystem.systemName}_mods\\vanilla.json";
-        Dictionary<string, int> fileUsages;
 
         public VanillaTracker()
         {
@@ -21,54 +19,11 @@ namespace Laboratory
             {
                 if (!Directory.Exists(Program.reader.mBigFileFolder + VANILLAFILESFOLDER))
                     Directory.CreateDirectory(Program.reader.mBigFileFolder + VANILLAFILESFOLDER);
-
-                var json = File.ReadAllText(Program.reader.mBigFileFolder + VANILLATRACKER);
-                fileUsages = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
             }
-            catch(Exception)
+            catch(Exception e)
             {
-                fileUsages = new Dictionary<string, int>();
-            }
-        }
-
-        public void Save()
-        {
-            try
-            {
-                var json = JsonConvert.SerializeObject(fileUsages, Formatting.Indented);
-                File.WriteAllText(Program.reader.mBigFileFolder + VANILLATRACKER, json);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"Couldn't save vanilla file settings!\n{e.ToString()}");
-            }
-        }
-
-        public void ModEnabled(Mod mod)
-        {
-            foreach (var file in mod.GetVirtualFiles())
-            {
-                if (!fileUsages.ContainsKey(file))
-                {
-                    fileUsages[file] = 1;
-                }
-                else
-                    fileUsages[file]++;
-            }
-        }
-
-        public void ModDisabled(Mod mod)
-        {
-            foreach (var file in mod.GetVirtualFiles())
-            {
-                if (fileUsages.ContainsKey(file))
-                {
-                    fileUsages[file]--;
-                    if (fileUsages[file] == 0)
-                    {
-                        fileUsages.Remove(file);
-                    }
-                }
+                MessageBox.Show("Failed to create vanilla files folder.");
+                throw e;
             }
         }
 
@@ -97,7 +52,7 @@ namespace Laboratory
             {
                 foreach (var toDel in toDelete)
                 {
-                    var filePath = VANILLAFILESFOLDER + "\\" + toDel.Replace('/', '\\');
+                    var filePath = Program.reader.mBigFileFolder + VANILLAFILESFOLDER + "\\" + toDel.Replace('/', '\\');
                     var newPath = tempFolder + "\\" + toDel.Replace('/', '\\');
                     var folders = Path.GetDirectoryName(newPath);
                     Directory.CreateDirectory(folders);
@@ -110,7 +65,7 @@ namespace Laboratory
             backed = 0;
             foreach(var toEx in toExtract)
             {
-                var path = VANILLAFILESFOLDER + "\\" + toEx.Replace('/', '\\');
+                var path = Program.reader.mBigFileFolder + VANILLAFILESFOLDER + toEx.Replace('/', '\\');
 
                 var dir = Path.GetDirectoryName(path);
                 if (!Directory.Exists(dir))
