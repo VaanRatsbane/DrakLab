@@ -31,6 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lab));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.aboutBtn = new System.Windows.Forms.PictureBox();
+            this.settingsButton = new System.Windows.Forms.PictureBox();
+            this.addModButton = new System.Windows.Forms.PictureBox();
+            this.exitPicButton = new System.Windows.Forms.PictureBox();
+            this.loadVBFPicButton = new System.Windows.Forms.PictureBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.modList = new System.Windows.Forms.ListView();
@@ -41,6 +46,11 @@
             this.modVersionLabel = new System.Windows.Forms.Label();
             this.modAuthorText = new System.Windows.Forms.Label();
             this.modNameText = new System.Windows.Forms.TextBox();
+            this.listFilesButton = new System.Windows.Forms.PictureBox();
+            this.removeModButton = new System.Windows.Forms.PictureBox();
+            this.toggleModButton = new System.Windows.Forms.PictureBox();
+            this.moveDownButton = new System.Windows.Forms.PictureBox();
+            this.moveUpButton = new System.Windows.Forms.PictureBox();
             this.modDescriptionText = new System.Windows.Forms.TextBox();
             this.logLabel = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -49,20 +59,15 @@
             this.openVBFDialog = new System.Windows.Forms.OpenFileDialog();
             this.addModDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.aboutBtn = new System.Windows.Forms.PictureBox();
-            this.settingsButton = new System.Windows.Forms.PictureBox();
-            this.addModButton = new System.Windows.Forms.PictureBox();
-            this.exitPicButton = new System.Windows.Forms.PictureBox();
-            this.loadVBFPicButton = new System.Windows.Forms.PictureBox();
-            this.listFilesButton = new System.Windows.Forms.PictureBox();
-            this.removeModButton = new System.Windows.Forms.PictureBox();
-            this.toggleModButton = new System.Windows.Forms.PictureBox();
-            this.moveDownButton = new System.Windows.Forms.PictureBox();
-            this.moveUpButton = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.aboutBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.addModButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitPicButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loadVBFPicButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -75,11 +80,6 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.aboutBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.addModButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitPicButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loadVBFPicButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.listFilesButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.removeModButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleModButton)).BeginInit();
@@ -108,6 +108,61 @@
             this.splitContainer1.Size = new System.Drawing.Size(1264, 681);
             this.splitContainer1.SplitterDistance = 47;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // aboutBtn
+            // 
+            this.aboutBtn.Image = global::Laboratory.Properties.Resources.aboutme;
+            this.aboutBtn.Location = new System.Drawing.Point(330, 3);
+            this.aboutBtn.Name = "aboutBtn";
+            this.aboutBtn.Size = new System.Drawing.Size(100, 41);
+            this.aboutBtn.TabIndex = 5;
+            this.aboutBtn.TabStop = false;
+            this.toolTip1.SetToolTip(this.aboutBtn, "Information.");
+            this.aboutBtn.Click += new System.EventHandler(this.aboutBtn_Click);
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.Enabled = false;
+            this.settingsButton.Location = new System.Drawing.Point(224, 3);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(100, 41);
+            this.settingsButton.TabIndex = 3;
+            this.settingsButton.TabStop = false;
+            this.toolTip1.SetToolTip(this.settingsButton, "Changes settings.");
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            // 
+            // addModButton
+            // 
+            this.addModButton.Enabled = false;
+            this.addModButton.Location = new System.Drawing.Point(118, 3);
+            this.addModButton.Name = "addModButton";
+            this.addModButton.Size = new System.Drawing.Size(100, 41);
+            this.addModButton.TabIndex = 2;
+            this.addModButton.TabStop = false;
+            this.toolTip1.SetToolTip(this.addModButton, "Adds a new mod.");
+            this.addModButton.Click += new System.EventHandler(this.addModButton_Click);
+            // 
+            // exitPicButton
+            // 
+            this.exitPicButton.Image = global::Laboratory.Properties.Resources.bye;
+            this.exitPicButton.Location = new System.Drawing.Point(436, 3);
+            this.exitPicButton.Name = "exitPicButton";
+            this.exitPicButton.Size = new System.Drawing.Size(100, 41);
+            this.exitPicButton.TabIndex = 1;
+            this.exitPicButton.TabStop = false;
+            this.toolTip1.SetToolTip(this.exitPicButton, "Exit");
+            this.exitPicButton.Click += new System.EventHandler(this.exitPicButton_Click);
+            // 
+            // loadVBFPicButton
+            // 
+            this.loadVBFPicButton.Image = global::Laboratory.Properties.Resources.openvbf;
+            this.loadVBFPicButton.Location = new System.Drawing.Point(12, 3);
+            this.loadVBFPicButton.Name = "loadVBFPicButton";
+            this.loadVBFPicButton.Size = new System.Drawing.Size(100, 41);
+            this.loadVBFPicButton.TabIndex = 0;
+            this.loadVBFPicButton.TabStop = false;
+            this.toolTip1.SetToolTip(this.loadVBFPicButton, "Opens a VBF file.");
+            this.loadVBFPicButton.Click += new System.EventHandler(this.loadVBFPicButton_Click);
             // 
             // splitContainer2
             // 
@@ -213,6 +268,7 @@
             this.modVersionLabel.Name = "modVersionLabel";
             this.modVersionLabel.Size = new System.Drawing.Size(0, 13);
             this.modVersionLabel.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.modVersionLabel, "No mod selected.");
             // 
             // modAuthorText
             // 
@@ -221,6 +277,7 @@
             this.modAuthorText.Name = "modAuthorText";
             this.modAuthorText.Size = new System.Drawing.Size(0, 13);
             this.modAuthorText.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.modAuthorText, "No mod selected.");
             // 
             // modNameText
             // 
@@ -230,117 +287,7 @@
             this.modNameText.ReadOnly = true;
             this.modNameText.Size = new System.Drawing.Size(566, 38);
             this.modNameText.TabIndex = 6;
-            // 
-            // modDescriptionText
-            // 
-            this.modDescriptionText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.modDescriptionText.Location = new System.Drawing.Point(0, 0);
-            this.modDescriptionText.Multiline = true;
-            this.modDescriptionText.Name = "modDescriptionText";
-            this.modDescriptionText.ReadOnly = true;
-            this.modDescriptionText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.modDescriptionText.Size = new System.Drawing.Size(987, 544);
-            this.modDescriptionText.TabIndex = 1;
-            // 
-            // logLabel
-            // 
-            this.logLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.logLabel.AutoSize = true;
-            this.logLabel.Location = new System.Drawing.Point(912, 10);
-            this.logLabel.Name = "logLabel";
-            this.logLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.logLabel.Size = new System.Drawing.Size(16, 13);
-            this.logLabel.TabIndex = 2;
-            this.logLabel.Text = "...";
-            this.logLabel.Click += new System.EventHandler(this.logLabel_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1177, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Log";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.Location = new System.Drawing.Point(279, 8);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(77, 17);
-            this.statusLabel.TabIndex = 1;
-            this.statusLabel.Text = "Not loaded";
-            // 
-            // applyChangesButton
-            // 
-            this.applyChangesButton.Enabled = false;
-            this.applyChangesButton.Location = new System.Drawing.Point(3, 5);
-            this.applyChangesButton.Name = "applyChangesButton";
-            this.applyChangesButton.Size = new System.Drawing.Size(270, 23);
-            this.applyChangesButton.TabIndex = 0;
-            this.applyChangesButton.Text = "Apply Changes";
-            this.applyChangesButton.UseVisualStyleBackColor = true;
-            this.applyChangesButton.Click += new System.EventHandler(this.applyChangesButton_Click);
-            // 
-            // aboutBtn
-            // 
-            this.aboutBtn.Image = global::Laboratory.Properties.Resources.aboutme;
-            this.aboutBtn.Location = new System.Drawing.Point(330, 3);
-            this.aboutBtn.Name = "aboutBtn";
-            this.aboutBtn.Size = new System.Drawing.Size(100, 41);
-            this.aboutBtn.TabIndex = 5;
-            this.aboutBtn.TabStop = false;
-            this.toolTip1.SetToolTip(this.aboutBtn, "Information.");
-            this.aboutBtn.Click += new System.EventHandler(this.aboutBtn_Click);
-            // 
-            // settingsButton
-            // 
-            this.settingsButton.Enabled = false;
-            this.settingsButton.Image = global::Laboratory.Properties.Resources.options;
-            this.settingsButton.Location = new System.Drawing.Point(224, 3);
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(100, 41);
-            this.settingsButton.TabIndex = 3;
-            this.settingsButton.TabStop = false;
-            this.toolTip1.SetToolTip(this.settingsButton, "Changes settings.");
-            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
-            // 
-            // addModButton
-            // 
-            this.addModButton.Enabled = false;
-            this.addModButton.Image = global::Laboratory.Properties.Resources.addmod;
-            this.addModButton.Location = new System.Drawing.Point(118, 3);
-            this.addModButton.Name = "addModButton";
-            this.addModButton.Size = new System.Drawing.Size(100, 41);
-            this.addModButton.TabIndex = 2;
-            this.addModButton.TabStop = false;
-            this.toolTip1.SetToolTip(this.addModButton, "Adds a new mod.");
-            this.addModButton.Click += new System.EventHandler(this.addModButton_Click);
-            // 
-            // exitPicButton
-            // 
-            this.exitPicButton.Image = global::Laboratory.Properties.Resources.bye;
-            this.exitPicButton.Location = new System.Drawing.Point(436, 3);
-            this.exitPicButton.Name = "exitPicButton";
-            this.exitPicButton.Size = new System.Drawing.Size(100, 41);
-            this.exitPicButton.TabIndex = 1;
-            this.exitPicButton.TabStop = false;
-            this.toolTip1.SetToolTip(this.exitPicButton, "Exit");
-            this.exitPicButton.Click += new System.EventHandler(this.exitPicButton_Click);
-            // 
-            // loadVBFPicButton
-            // 
-            this.loadVBFPicButton.Image = global::Laboratory.Properties.Resources.openvbf;
-            this.loadVBFPicButton.Location = new System.Drawing.Point(12, 3);
-            this.loadVBFPicButton.Name = "loadVBFPicButton";
-            this.loadVBFPicButton.Size = new System.Drawing.Size(100, 41);
-            this.loadVBFPicButton.TabIndex = 0;
-            this.loadVBFPicButton.TabStop = false;
-            this.toolTip1.SetToolTip(this.loadVBFPicButton, "Opens a VBF file.");
-            this.loadVBFPicButton.Click += new System.EventHandler(this.loadVBFPicButton_Click);
+            this.toolTip1.SetToolTip(this.modNameText, "No mod selected.\r\n");
             // 
             // listFilesButton
             // 
@@ -404,6 +351,60 @@
             this.toolTip1.SetToolTip(this.moveUpButton, "Move mod up.");
             this.moveUpButton.Click += new System.EventHandler(this.moveUpButton_Click);
             // 
+            // modDescriptionText
+            // 
+            this.modDescriptionText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.modDescriptionText.Location = new System.Drawing.Point(0, 0);
+            this.modDescriptionText.Multiline = true;
+            this.modDescriptionText.Name = "modDescriptionText";
+            this.modDescriptionText.ReadOnly = true;
+            this.modDescriptionText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.modDescriptionText.Size = new System.Drawing.Size(987, 544);
+            this.modDescriptionText.TabIndex = 1;
+            // 
+            // logLabel
+            // 
+            this.logLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.logLabel.AutoSize = true;
+            this.logLabel.Location = new System.Drawing.Point(912, 10);
+            this.logLabel.Name = "logLabel";
+            this.logLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.logLabel.Size = new System.Drawing.Size(16, 13);
+            this.logLabel.TabIndex = 2;
+            this.logLabel.Text = "...";
+            this.logLabel.Click += new System.EventHandler(this.logLabel_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1177, 5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Log";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel.Location = new System.Drawing.Point(279, 8);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(77, 17);
+            this.statusLabel.TabIndex = 1;
+            this.statusLabel.Text = "Not loaded";
+            // 
+            // applyChangesButton
+            // 
+            this.applyChangesButton.Enabled = false;
+            this.applyChangesButton.Location = new System.Drawing.Point(3, 5);
+            this.applyChangesButton.Name = "applyChangesButton";
+            this.applyChangesButton.Size = new System.Drawing.Size(270, 23);
+            this.applyChangesButton.TabIndex = 0;
+            this.applyChangesButton.Text = "Apply Changes";
+            this.applyChangesButton.UseVisualStyleBackColor = true;
+            this.applyChangesButton.Click += new System.EventHandler(this.applyChangesButton_Click);
+            // 
             // Lab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -419,6 +420,11 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.aboutBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.addModButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitPicButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loadVBFPicButton)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
@@ -434,11 +440,6 @@
             this.splitContainer4.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.aboutBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.addModButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitPicButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loadVBFPicButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.listFilesButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.removeModButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleModButton)).EndInit();

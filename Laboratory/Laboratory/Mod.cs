@@ -124,7 +124,7 @@ namespace Laboratory
 
         public ModFile GetModFile(string filename)
         {
-            return files.Where(mf => mf.virtualPath == filename).First();
+            return files.Where(mf => mf.virtualPath == filename).FirstOrDefault();
         }
 
         public void Enable()

@@ -29,7 +29,7 @@ namespace Laboratory
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://steamcommunity.com/Vaan");
+            System.Diagnostics.Process.Start("https://steamcommunity.com/id/Vaan");
         }
 
         private void button1_Click(object sender, EventArgs e)

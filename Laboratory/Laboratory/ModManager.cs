@@ -93,6 +93,7 @@ namespace Laboratory
         public void ApplyChanges(Lab lab)
         {
             Cursor.Current = Cursors.WaitCursor;
+            string tempDirectory = "";
 
             try
             {
@@ -102,9 +103,7 @@ namespace Laboratory
                 }
 
                 Save();
-
-                string tempDirectory;
-
+                
                 var usingCustomPath = false;
                 if(Program.settings.useCustomTemp)
                 {
@@ -133,7 +132,7 @@ namespace Laboratory
                 vanilla.Extract(scaffold, tempDirectory, out int backed, out int reverted);
                 lab.Log($"Backed up {backed} files.");
 
-                if (scaffold.Length > 0)
+                if (scaffold.Length > 0 || reverted > 0)
                 {
                     lab.Log("Preparing injection...");
 
@@ -168,14 +167,22 @@ namespace Laboratory
 
                     Program.InjectionLog(logList);
 
-                    DeleteFilesAndFoldersRecursively(tempDirectory);
-
                     lab.Log($"Injected {scaffold.Count()} files and reverted {reverted} original files.");
+
+                    hasChanges = false;
+
+                    MessageBox.Show("Done.");
+                    Program.reader.UpdateAfterInjection();
                 }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
+            }
+            finally
+            {
+                if(Directory.Exists(tempDirectory))
+                    DeleteFilesAndFoldersRecursively(tempDirectory);
             }
 
             Cursor.Current = Cursors.Default;
@@ -283,7 +290,6 @@ namespace Laboratory
         public void RemoveMod(int pos)
         {
             var mod = mods[pos];
-            hasChanges = mod.state == ModState.ACTIVE;
             DisableModState(pos);
             Directory.Delete(mod.modFolder, true);
             mods.RemoveAt(pos);
@@ -401,6 +407,31 @@ namespace Laboratory
 
             Thread.Sleep(1); // This makes the difference between whether it works or not. Sleep(0) is not enough.
             Directory.Delete(target_dir);
+        }
+
+        public List<Mod> GetYellowMods()
+        {
+            var scaffold = GetScaffold();
+            var result = new List<Mod>();
+            foreach(var mod in mods)
+            if (mod.state == ModState.ACTIVE)
+            {
+                foreach (var file in mod.files)
+                {
+                    if (!scaffold.Contains(file))
+                    {
+                        result.Add(mod);
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public void UpdateRanks()
+        {
+            for (int i = 0; i < mods.Count; i++)
+                mods[i].rank = i + 1;
         }
 
     }

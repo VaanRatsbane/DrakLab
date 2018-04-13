@@ -15,11 +15,11 @@ namespace Laboratory
         {
             var list = new List<ModFile>();
             foreach (var m in mods)
-                if(m.state == ModState.ACTIVE)
+                if(m.state == ModState.ACTIVE && m.files.Count > 0)
                 {
                     var virtuals = m.GetVirtualFiles();
                     foreach (var v in virtuals)
-                        if (list.FirstOrDefault(o => o.virtualPath == v) == null)
+                        if (list.Count(o => o.virtualPath == v) == 0)
                             list.Add(m.GetModFile(v));
                 }
             return list.ToArray();

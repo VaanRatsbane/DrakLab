@@ -55,6 +55,8 @@ namespace Laboratory
                 LoadMods();
                 addModButton.Enabled = true;
                 settingsButton.Enabled = true;
+                addModButton.Image = Properties.Resources.addmod;
+                settingsButton.Image = Properties.Resources.options;
 
                 return true;
             }
@@ -102,6 +104,9 @@ namespace Laboratory
             modDescriptionText.Text = mod.description;
             modAuthorText.Text = $"By {mod.author}";
             modNameText.Text = mod.modName;
+            toolTip1.SetToolTip(modNameText, mod.modName);
+            toolTip1.SetToolTip(modAuthorText, mod.author);
+            toolTip1.SetToolTip(modVersionLabel, mod.version);
             modVersionLabel.Text = $"Version: {mod.version}";
             moveUpButton.Enabled = index > 0;
             moveDownButton.Enabled = index < modList.Items.Count - 1;
@@ -187,6 +192,7 @@ namespace Laboratory
                     BackColor = item.BackColor
                 };
             }
+            Program.manager.UpdateRanks();
         }
 
         private void removeModButton_Click(object sender, EventArgs e)
@@ -202,12 +208,16 @@ namespace Laboratory
                 else
                 {
                     modNameText.Text = "";
+                    toolTip1.SetToolTip(modNameText, "No mod selected.");
                     modDescriptionText.Text = "";
                     modAuthorText.Text = "";
+                    toolTip1.SetToolTip(modAuthorText, "No mod selected.");
                     modVersionLabel.Text = "";
+                    toolTip1.SetToolTip(modVersionLabel, "No mod selected.");
                 }
                 UpdateStatusLabel();
-                applyChangesButton.Enabled = Program.manager.hasChanges;
+                RecalcRanks();
+                Program.manager.ApplyChanges(this);
                 Cursor.Current = Cursors.Default;
             }
         }
@@ -225,7 +235,7 @@ namespace Laboratory
                 var mod = Program.manager.GetMod(modList.SelectedItems[0].Index);
                 if(mod.state == ModState.ACTIVE)
                 {
-                    toggleModButton.Image = Properties.Resources.disable;
+                    toggleModButton.Image = Properties.Resources.add;
                     mod.state = ModState.INACTIVE;
                     modList.SelectedItems[0].BackColor = Color.White;
                     modList.SelectedItems[0].SubItems[2].Text = "";
@@ -233,7 +243,7 @@ namespace Laboratory
                 }
                 else if(mod.state == ModState.INACTIVE)
                 {
-                    toggleModButton.Image = Properties.Resources.add;
+                    toggleModButton.Image = Properties.Resources.disable;
                     mod.state = ModState.ACTIVE;
                     modList.SelectedItems[0].BackColor = Color.LightGreen;
                     modList.SelectedItems[0].SubItems[2].Text = "✓";
@@ -245,16 +255,27 @@ namespace Laboratory
 
         private void applyChangesButton_Click(object sender, EventArgs e)
         {
+            var mods = Program.manager.GetYellowMods();
+            if (mods.Count > 0)
+            {
+                string s = "";
+                foreach (var m in mods)
+                    s += $"\n{m.modName}";
+                if (MessageBox.Show("Some active mods will not install all their files due to being overwritten. Proceed?" + s, "Warning", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+            }
+
             if(MessageBox.Show("This will extract backups and inject your mods. It might take a while. Proceed?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Program.manager.ApplyChanges(this);
-                UpdateStatusLabel();
                 if (Program.settings.openLog)
                 {
                     var form = new LogForm(Program.injectionLog);
                     form.Owner = this;
                     form.ShowDialog();
                 }
+                applyChangesButton.Enabled = Program.manager.hasChanges;
+                UpdateStatusLabel();
             }
         }
 
@@ -322,11 +343,6 @@ namespace Laboratory
                 }
             }
 
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://www.steamcommunity.com/id/Vaan");
         }
 
         private void aboutBtn_Click(object sender, EventArgs e)
