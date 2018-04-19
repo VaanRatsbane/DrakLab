@@ -17,6 +17,7 @@ namespace Laboratory
         public Lab()
         {
             InitializeComponent();
+            button1.BringToFront();
             if (!(Directory.Exists("ff12-vbf") && File.Exists("ff12-vbf\\ff12-vbf.exe") &&
                 File.Exists("ff12-vbf\\libgcc_s_seh-1.dll") && File.Exists("ff12-vbf\\libstdc++-6.dll") &&
                 File.Exists("ff12-vbf\\libwinpthread-1.dll") && File.Exists("ff12-vbf\\zlib1.dll")))
@@ -75,6 +76,7 @@ namespace Laboratory
                 modList.Items.Add(e.Current.GetListItem());
                 i++;
             }
+            Program.manager.UpdateCurrentScaffold();
             Log($"Loaded {i} mods.");
         }
 

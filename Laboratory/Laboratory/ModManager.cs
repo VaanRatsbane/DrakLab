@@ -24,6 +24,8 @@ namespace Laboratory
 
         List<Mod> mods;
 
+        ModFile[] currentScaffold;
+
         public bool hasChanges;
 
         public ModManager()
@@ -76,8 +78,6 @@ namespace Laboratory
             {
                 MessageBox.Show($"Couldn't save mod settings!\n{e.ToString()}");
             }
-            
-            hasChanges = false;
         }
 
         public void AcknowledgeMods(bool setInactive = false)
@@ -136,8 +136,13 @@ namespace Laboratory
                 {
                     lab.Log("Preparing injection...");
 
+                    int injectedFromScaffold = 0;
                     foreach (var modFile in scaffold)
                     {
+                        if (currentScaffold.Contains(modFile))
+                            continue;
+
+                        injectedFromScaffold++;
                         modFile.parent.newMod = false;
                         var newPath = tempDirectory + '\\' + modFile.virtualPath.Replace('/', '\\');
                         var folders = Path.GetDirectoryName(newPath);
@@ -167,9 +172,10 @@ namespace Laboratory
 
                     Program.InjectionLog(logList);
 
-                    lab.Log($"Injected {scaffold.Count()} files and reverted {reverted} original files.");
+                    lab.Log($"Injected {injectedFromScaffold} files and reverted {reverted} original files.");
 
                     hasChanges = false;
+                    currentScaffold = scaffold;
 
                     MessageBox.Show("Done.");
                     Program.reader.UpdateAfterInjection();
@@ -282,7 +288,7 @@ namespace Laboratory
             }
             else
             {
-                lab.Log("Failed to load the mod.");
+                MessageBox.Show("Error loading the mod. Check the log.");
                 return null;
             }
         }
@@ -293,6 +299,8 @@ namespace Laboratory
             DisableModState(pos);
             Directory.Delete(mod.modFolder, true);
             mods.RemoveAt(pos);
+            if(!hasChanges)
+                Save();
         }
 
         public void EnableModState(int pos)
@@ -303,8 +311,16 @@ namespace Laboratory
 
         public void DisableModState(int pos)
         {
+            if (mods[pos].state == ModState.INACTIVE && !hasChanges)
+                return;
+
             mods[pos].state = ModState.INACTIVE;
             hasChanges = true;
+        }
+
+        public void UpdateCurrentScaffold()
+        {
+            currentScaffold = Scaffold.GetScaffold(mods);
         }
 
         public static List<string> GetAllFiles(string targetDirectory)

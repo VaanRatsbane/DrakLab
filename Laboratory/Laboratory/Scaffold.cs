@@ -20,7 +20,13 @@ namespace Laboratory
                     var virtuals = m.GetVirtualFiles();
                     foreach (var v in virtuals)
                         if (list.Count(o => o.virtualPath == v) == 0)
-                            list.Add(m.GetModFile(v));
+                        {
+                            var file = m.GetModFile(v);
+                            if (file == null)
+                                Program.Log($"Failed to get file {v} belonging to mod {m.modName}.");
+                            else
+                                list.Add(m.GetModFile(v));
+                        }
                 }
             return list.ToArray();
         }
